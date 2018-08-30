@@ -10,10 +10,17 @@ class Todo(db.Model):
     content = db.Column(db.String(200), unique=True, nullable=False)
     completed = db.Column(db.Boolean)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def root():
+    return redirect(url_for('index'))
+
+@app.route('/todos', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
-        return render_template('index.html')
+        # from IPython import embed; embed()
+        todos = Todo.query.all()
+        # from IPython import embed; embed()
+        return render_template('index.html', todos=todos)
     if request.method == 'POST':
         # from IPython import embed; embed()
         todo = Todo(content=request.form['todoitem'], completed=False)

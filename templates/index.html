@@ -2,6 +2,13 @@
 
 
 {% block content %}
-<h1>Todos</h1>
-<a href="{{url_for('new')}}">Add Todo</a>
+  <h1>Todos</h1>
+
+{% for todo in todos %}
+  <div>
+    <h3>{{todo.content}}</h3>
+    <input type="checkbox">
+  </div>
+{% endfor %}
+  <a href="{{url_for('new')}}">Add Todo</a>
 {% endblock %}
