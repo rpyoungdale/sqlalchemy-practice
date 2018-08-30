@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from flask_modus import Modus
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/ryanyoungdale/python-projects/sqlalchemy-flask-practice/todo.db'
@@ -22,7 +23,6 @@ def index():
         # from IPython import embed; embed()
         return render_template('index.html', todos=todos)
     if request.method == 'POST':
-        # from IPython import embed; embed()
         todo = Todo(content=request.form['todoitem'], completed=False)
         db.session.add(todo)
         db.session.commit()
@@ -32,6 +32,16 @@ def index():
 @app.route('/todos/new')
 def new():
     return render_template('new.html')
+
+@app.route('/edit/<int:id>')
+def edit(id):
+    todo = Todo.query.filter_by(id=id)[0]
+    # from IPython import embed; embed()
+    todo.completed = True
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
 
 
 

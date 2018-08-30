@@ -5,10 +5,16 @@
   <h1>Todos</h1>
 
 {% for todo in todos %}
-  <div>
-    <h3>{{todo.content}}</h3>
-    <input type="checkbox">
-  </div>
+
+    <div>
+      <h3>{{todo.content}}</h3>
+      {% if todo.completed %}
+        <h3>DONE</h3>
+      {% else %}
+        <a href="{{url_for('edit', id=todo.id)}}">Complete</a>
+      {% endif %}
+    </div>
+
 {% endfor %}
-  <a href="{{url_for('new')}}">Add Todo</a>
+  <button><a href="{{url_for('new')}}">Add Todo</a></button>
 {% endblock %}
